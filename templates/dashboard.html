@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-5">
+
+  <!-- DASHBOARD WIDGETS -->
+  <div class="row g-4 mb-5">
+
+    <!-- Upcoming Appointments -->
+    <div class="col-12 col-md-6">
+      <div class="card shadow-sm h-100 p-4">
+        <h5 class="fw-bold text-primary mb-3">Upcoming Appointments</h5>
+        <div class="table-responsive">
+          <ul class="list-group list-group-flush">
+            {% for appt in upcoming %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ appt.doctor.name }}</strong> <br>
+                <small class="text-muted">{{ appt.date }} at {{ appt.time }}</small>
+              </div>
+              <span class="badge bg-success">Scheduled</span>
+            </li>
+            {% else %}
+            <li class="list-group-item text-muted text-center">No upcoming appointments</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <a href="{{ url_for('appointments') }}" class="btn btn-primary btn-sm mt-3 w-100 w-md-auto">
+          <i class="bi bi-eye me-1"></i> View All
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="col-12 col-md-6">
+      <div class="card shadow-sm h-100 p-4 text-center">
+        <h5 class="fw-bold text-primary mb-3">Quick Actions</h5>
+        <p class="text-muted mb-3">Manage your appointments or book a new doctor quickly</p>
+        <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
+          <a href="{{ url_for('book') }}" class="btn btn-primary btn-sm">
+            <i class="bi bi-calendar-plus me-1"></i> Book Appointment
+          </a>
+          <a href="{{ url_for('appointments') }}" class="btn btn-success btn-sm">
+            <i class="bi bi-card-list me-1"></i> View Appointments
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DOCTOR CARDS -->
+  <h3 class="mb-3 text-primary">All Doctors</h3>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    {% for doc in doctors %}
+    <div class="col">
+      <div class="card-doctor text-center p-4 shadow-sm h-100">
+        <div class="mb-2">
+          <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center"
+               style="width:60px; height:60px;">
+            <i class="bi bi-person-badge fs-4"></i>
+          </div>
+        </div>
+        <h5 class="fw-bold mb-1">{{ doc.name }}</h5>
+        <span class="badge bg-info text-dark mb-3">{{ doc.specialization }}</span>
+        <a href="{{ url_for('book', doctor_id=doc.id) }}" class="btn btn-primary btn-sm w-100 w-sm-auto">
+          <i class="bi bi-calendar-check me-1"></i> Book Appointment
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock %}

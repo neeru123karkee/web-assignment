@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="hero-section-quote d-flex align-items-center justify-content-center" style="min-height: 65vh; position: relative; background: linear-gradient(to right, #007bff, #00c6ff);">
+  <div class="overlay w-100 h-100 d-flex align-items-center justify-content-center" style="background: rgba(0,0,0,0.4);">
+    <div class="container text-center px-3">
+      {% if 'user_id' in session %}
+        <h1 class="display-5 fw-bold text-white">"Your Health, Our Priority."</h1>
+        <p class="lead text-white mt-3">Welcome back, {{ session['user_name'] }}!</p>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-light btn-lg mt-3"><i class="bi bi-speedometer2 me-1"></i> Go to Dashboard</a>
+      {% else %}
+        <h1 class="display-5 fw-bold text-white">"Your Health, Our Priority."</h1>
+        <p class="lead text-white mt-3">Book Smart. Get Care Fast.</p>
+        <div class="d-flex flex-column flex-sm-row justify-content-center gap-2 mt-3">
+          <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg w-100 w-sm-auto"><i class="bi bi-box-arrow-in-right me-1"></i> Login</a>
+          <a href="{{ url_for('register') }}" class="btn btn-secondary btn-lg w-100 w-sm-auto"><i class="bi bi-person-plus me-1"></i> Register</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED DOCTORS -->
+<section class="mt-5 mb-5">
+  <div class="container">
+    <h2 class="text-center mb-4 text-primary">Featured Specialists</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      {% for doc in doctors[:4] %}
+      <div class="col">
+        <div class="card-doctor text-center p-4 shadow-sm h-100 hover-scale">
+          <div class="mb-3">
+            <i class="bi bi-person-circle fs-1 text-primary"></i>
+          </div>
+          <h5 class="fw-bold mb-1">{{ doc.name }}</h5>
+          <span class="badge bg-info text-dark mb-3">{{ doc.specialization }}</span>
+          {% if 'user_id' in session %}
+            <a href="{{ url_for('book', doctor_id=doc.id) }}" class="btn btn-primary btn-sm mt-2 w-100 w-sm-auto"><i class="bi bi-calendar-check me-1"></i> Book Appointment</a>
+          {% else %}
+            <a href="{{ url_for('login') }}" class="btn btn-secondary btn-sm mt-2 w-100 w-sm-auto"><i class="bi bi-box-arrow-in-right me-1"></i> Login to Book</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="my-5 py-5 bg-light rounded-4 shadow-sm">
+  <div class="container text-center">
+    <h3 class="mb-4 text-primary fw-bold">Why Choose Us?</h3>
+    <div class="row g-4">
+      <div class="col-12 col-md-4">
+        <i class="bi bi-clock-history fs-1 text-success mb-2"></i>
+        <h5 class="fw-semibold">Fast Booking</h5>
+        <p>Book appointments with just a few clicks.</p>
+      </div>
+      <div class="col-12 col-md-4">
+        <i class="bi bi-shield-lock fs-1 text-info mb-2"></i>
+        <h5 class="fw-semibold">Secure & Reliable</h5>
+        <p>Your data and appointments are completely safe.</p>
+      </div>
+      <div class="col-12 col-md-4">
+        <i class="bi bi-person-check fs-1 text-warning mb-2"></i>
+        <h5 class="fw-semibold">Verified Doctors</h5>
+        <p>Book appointments with certified specialists.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

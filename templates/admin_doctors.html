@@ -1,0 +1,65 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h3 class="fw-bold text-primary">Doctor Management</h3>
+        <p class="text-muted mb-0">Overview of hospital medical staff and their schedules</p>
+    </div>
+</div>
+
+<div class="row g-4">
+
+    {% for doctor in doctors %}
+    <div class="col-md-6 col-lg-4">
+
+        <div class="card shadow border-0 h-100">
+            <div class="card-body text-center">
+
+                <!-- Doctor Icon -->
+                <div class="mb-3">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center"
+                         style="width:70px; height:70px;">
+                        <i class="bi bi-person-badge fs-3"></i>
+                    </div>
+                </div>
+
+                <!-- Doctor Name -->
+                <h5 class="fw-bold mb-1">{{ doctor.name }}</h5>
+
+                <!-- Specialization -->
+                <span class="badge bg-info text-dark mb-3">
+                    {{ doctor.specialization }}
+                </span>
+
+                <hr>
+
+                <!-- Appointment Summary -->
+                <p class="mb-1">
+                    <strong>Total Appointments:</strong>
+                    {{ doctor.appointments|length }}
+                </p>
+
+                {% if doctor.appointments %}
+                    <small class="text-muted">
+                        Next: 
+                        {{ doctor.appointments[0].date }} at 
+                        {{ doctor.appointments[0].time }}
+                    </small>
+                {% else %}
+                    <small class="text-muted">
+                        No scheduled appointments
+                    </small>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

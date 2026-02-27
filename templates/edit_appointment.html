@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-lg-5">
+
+      <!-- Form Card -->
+      <div class="card shadow-sm border-0 p-4">
+        <h3 class="text-center fw-bold text-primary mb-2">Edit Appointment</h3>
+        <p class="text-center text-muted mb-4">Update your scheduled date and time</p>
+
+        <form method="POST" class="needs-validation" novalidate>
+
+          <!-- DATE -->
+          <div class="mb-3">
+            <label for="date" class="form-label fw-semibold">Date</label>
+            <input type="date" id="date" class="form-control rounded" name="date" value="{{ appt.date }}" required>
+            <div class="invalid-feedback">Please select a date.</div>
+          </div>
+
+          <!-- TIME -->
+          <div class="mb-3">
+            <label for="time" class="form-label fw-semibold">Time</label>
+            <input type="time" id="time" class="form-control rounded" name="time" value="{{ appt.time }}" required>
+            <div class="invalid-feedback">Please select a time.</div>
+          </div>
+
+          <!-- ACTION BUTTONS -->
+          <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+            <button type="submit" class="btn btn-primary w-100 w-sm-auto">
+              <i class="bi bi-pencil-square me-1"></i> Update
+            </button>
+            <a href="{{ url_for('appointments') }}" class="btn btn-secondary w-100 w-sm-auto">
+              <i class="bi bi-x-circle me-1"></i> Cancel
+            </a>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
